@@ -18,7 +18,7 @@ import fs from 'fs';
     await page.goto('https://free2.airlinesim.aero/app/aircraft/manufacturers?1');
     await page.waitForLoadState('networkidle');
     
-    let html = await page.content();
+    const html = await page.content();
     const currentUrl = new URL(page.url());
     const families = await getAirplaneFamilies(currentUrl, html);
 
@@ -26,14 +26,14 @@ import fs from 'fs';
 
     for (const [familyName, id] of Object.entries(families)) {
         await page.goto(`https://free2.airlinesim.aero/action/enterprise/aircraftsFamily?id=${id}`);
-        html = await page.content();
+        const html = await page.content();
         const models = await getAirplaneModels(currentUrl, html);
         allModels[familyName] = {}; 
      
         for (const [modelName, modelId] of Object.entries(models)) {
             await page.goto(`https://free2.airlinesim.aero/action/enterprise/aircraftsType?id=${modelId}`);
-            const modelHtml = await page.content();
-            const modelData = await scrapeModelData(currentUrl, modelHtml);
+            const html = await page.content();
+            const modelData = await scrapeModelData(currentUrl, html);
             
             allModels[familyName][modelName] = modelData;
         }

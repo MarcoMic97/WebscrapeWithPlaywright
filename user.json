@@ -5,7 +5,7 @@
       "value": "GA1.1.177738860.1732203118",
       "domain": ".airlinesim.aero",
       "path": "/",
-      "expires": 1767180635.619304,
+      "expires": 1767183477.867618,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
@@ -52,10 +52,10 @@
     },
     {
       "name": "_ga_1YJZV0ENPC",
-      "value": "GS1.1.1732619718.2.1.1732620635.0.0.0",
+      "value": "GS1.1.1732623237.3.1.1732623477.0.0.0",
       "domain": ".airlinesim.aero",
       "path": "/",
-      "expires": 1767180635.619093,
+      "expires": 1767183477.867439,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
