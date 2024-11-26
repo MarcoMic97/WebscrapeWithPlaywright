@@ -1,6 +1,8 @@
+
 import playwright from 'playwright';
 import * as Cheerio from 'cheerio';
 import path from 'node:path';
+import { get } from 'node:http';
 
 (async()=>{
     const browser = await playwright.chromium.launch({
@@ -17,18 +19,23 @@ import path from 'node:path';
     await page.goto('https://free2.airlinesim.aero/app/aircraft/manufacturers?1');
     await page.waitForLoadState('networkidle');
     var html = await page.content();
+    const currentUrl = new URL(page.url())
+    const families = await getAirplaneFamilies(currentUrl, html);
+    await page.goto('https://free2.airlinesim.aero/action/enterprise/aircraftsFamily?id=2200400');
+    await page.waitForLoadState('networkidle');
+    var html = await page.content();
+    const models = await getAirplaneModels(currentUrl, html);
+
+
+
+    console.log('Families: ', families,'\n', 'Models: ', models);
+
     page.on('close', ()=>{
         context.storageState({
             path:'./user.json'
         })
     })
-    const currentUrl = new URL(page.url())
-    const families = await getAirplaneFamilies(currentUrl, html);
-    await page.goto('https://free2.airlinesim.aero/action/enterprise/aircraftsFamily?id=1200250');
-    await page.waitForLoadState('networkidle');
-    var html = await page.content();
-    const models = await getAirplaneModels(currentUrl, html);
-    console.log(families, models);
+
 })();
 async function getAirplaneFamilies(currentUrl:URL, html:string): Promise<Record<string, number>> {
     const families:Record<string, number> = {};
@@ -43,15 +50,16 @@ async function getAirplaneFamilies(currentUrl:URL, html:string): Promise<Record<
     return families;
 }
 
-async function getAirplaneModels(currentUrl:URL, html:string): Promise<Record<string, number>> {
-    const models:Record<string, number> = {};
+// Extract airplane models
+async function getAirplaneModels(currentUrl: URL, html: string): Promise<Record<string, number>> {
+    const models: Record<string, number> = {};
     const $ = Cheerio.load(html);
-    const links = $('table.as-table-well > a[href]');
-    links.each((_ , e)=>{
-        const href = e.attribs['href']
-        const hrefResult = path.join(currentUrl.pathname, href);
-        const hrefURL = new URL(hrefResult.replaceAll('\\', '/'), currentUrl);
-        models[$(e).text()] = parseInt(hrefURL.searchParams.get('id'), 10);
+    const links = $('table tbody tr td:first-child a'); // Correct selector for model links
+    links.each((_, e) => {
+        const href = e.attribs['href'];
+        const hrefURL = new URL(href, currentUrl); // Simplified URL resolution
+        models[$(e).text().trim()] = parseInt(hrefURL.searchParams.get('id') || '', 10);
     });
     return models;
 }
+
