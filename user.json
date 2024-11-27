@@ -1,0 +1,45 @@
+{
+    "cookies": [
+      {
+        "name": "_ga",
+        "value": "GA1.1.177738860.1732203118",
+        "domain": ".airlinesim.aero",
+        "path": "/",
+        "expires": 1766763205.006811,
+        "httpOnly": false,
+        "secure": false,
+        "sameSite": "Lax"
+      },
+      {
+        "name": "_sl_lp",
+        "value": "https%3A%2F%2Fwww.airlinesim.aero%2Fen",
+        "domain": ".airlinesim.aero",
+        "path": "/",
+        "expires": 1766763117.57382,
+        "httpOnly": false,
+        "secure": false,
+        "sameSite": "Lax"
+      },
+      {
+        "name": "as-sid",
+        "value": "oRHamwVz2HwhCxucuV5a55MgE9w6GsDg_AP7VMaF2uIbv5LpsaF5rM0hvSBR4I8Rd",
+        "domain": ".airlinesim.aero",
+        "path": "/",
+        "expires": 1763739144,
+        "httpOnly": false,
+        "secure": false,
+        "sameSite": "Lax"
+      },
+      {
+        "name": "_ga_1YJZV0ENPC",
+        "value": "GS1.1.1732203117.1.1.1732203217.0.0.0",
+        "domain": ".airlinesim.aero",
+        "path": "/",
+        "expires": 1766763217.589874,
+        "httpOnly": false,
+        "secure": false,
+        "sameSite": "Lax"
+      }
+    ],
+    "origins": []
+  }
